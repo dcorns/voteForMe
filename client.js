@@ -5,6 +5,7 @@
 'use strict';
 function main(){
   var imagesIn = [];
+  var barChart;
   var tracker = {
     selected:[]
     , checkSelected: function(checkIdx){
@@ -25,7 +26,6 @@ function main(){
     },
     resetSelected: function(){
       this.selected.length = 0;
-      console.dir(this.selected);
     }
   };
 
@@ -46,13 +46,17 @@ function main(){
     var pic1 = document.getElementById('img1');
     var pic2 = document.getElementById('img2');
     pic1.addEventListener('click', function(e){
-      imagesIn[e.target.dataset.idx].votes += 1;
-      console.log(imagesIn[e.target.dataset.idx].votes);
+      var idx = e.target.dataset.idx;
+      imagesIn[idx].votes += 1;
+      barChart.datasets[0].bars[idx].value = imagesIn[idx].votes;
+      barChart.update();
       setPic(pic2, pic1);
     });
     pic2.addEventListener('click', function(e){
-      imagesIn[e.target.dataset.idx].votes += 1;
-      console.log(imagesIn[e.target.dataset.idx].votes);
+      var idx = e.target.dataset.idx;
+      imagesIn[idx].votes += 1;
+      barChart.datasets[0].bars[idx].value = imagesIn[idx].votes;
+      barChart.update();
       setPic(pic1, pic2);
     });
     document.getElementById('btnZeroOut').addEventListener('click', function(e){
@@ -62,6 +66,18 @@ function main(){
     });
     setPic(pic1);
     setPic(pic2);
+    buildChart();
+
+  }
+
+  function buildChart(){
+    var ctx = document.getElementById("csv").getContext("2d");
+    var c = 0, len = imagesIn.length, data = {labels:[], datasets: [{data:[]}]};
+    for(c; c < len; c++){
+      data.labels.push(imagesIn[c].id);
+      data.datasets[0].data.push(imagesIn[c].votes);
+    }
+    barChart = new Chart(ctx).Bar(data);
   }
 
   function zeroOutVotes(){
