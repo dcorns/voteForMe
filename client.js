@@ -48,12 +48,12 @@ function main(){
     pic1.addEventListener('click', function(e){
       imagesIn[e.target.dataset.idx].votes += 1;
       console.log(imagesIn[e.target.dataset.idx].votes);
-      setPic(pic2);
+      setPic(pic2, pic1);
     });
     pic2.addEventListener('click', function(e){
       imagesIn[e.target.dataset.idx].votes += 1;
       console.log(imagesIn[e.target.dataset.idx].votes);
-      setPic(pic1);
+      setPic(pic1, pic2);
     });
     document.getElementById('btnLoadMatch').addEventListener('click', function(e){
       setPic(pic1);
@@ -62,23 +62,27 @@ function main(){
     setPic(pic1);
     setPic(pic2);
   }
-
-  function setPic(pic){
-    var picNew = getNewImage();
-    pic.setAttribute('src', picNew);
+//sets the new image to an image that is not already displayed, don't want to vote against yourself
+  function setPic(pic, otherPic){
+    var picNew, otherIdx;
+    if(otherPic) otherIdx = otherPic.dataset.idx;
+    else otherIdx = -1;
+    do{
+      picNew = getNewImage();
+    }while(picNew.idx == otherIdx);
+    console.dir(picNew);
+    pic.setAttribute('src', picNew.img);
     pic.setAttribute('data-idx', picNew.idx);
   }
-
-  function getNewImage(oppositeImg){
-    var opImg = oppositeImg || -1;
+//gets a random image that has not yet been used and if all have been used resets to cycle through again
+  function getNewImage(){
     var sLen = tracker.selected.length;
     var iLen = imagesIn.length;
     var idx;
     if(sLen < iLen - 1){
       idx = getRandomInt(iLen);
       while(!(tracker.addImageIdx(idx) === idx)){
-        var newIdx = getRandomInt(iLen);
-        if(!(opImg == newIdx)) idx = newIdx;
+        idx = getRandomInt(iLen);
       }
     }else{
       tracker.resetSelected();
