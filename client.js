@@ -55,12 +55,21 @@ function main(){
       console.log(imagesIn[e.target.dataset.idx].votes);
       setPic(pic1, pic2);
     });
-    document.getElementById('btnLoadMatch').addEventListener('click', function(e){
+    document.getElementById('btnZeroOut').addEventListener('click', function(e){
+      zeroOutVotes();
       setPic(pic1);
       setPic(pic2);
     });
     setPic(pic1);
     setPic(pic2);
+  }
+
+  function zeroOutVotes(){
+    var c = 0;
+    var len = imagesIn.length;
+    for(c; c < len; c++){
+      imagesIn[c].votes = 0;
+    }
   }
 //sets the new image to an image that is not already displayed, don't want to vote against yourself
   function setPic(pic, otherPic){
@@ -70,7 +79,6 @@ function main(){
     do{
       picNew = getNewImage();
     }while(picNew.idx == otherIdx);
-    console.dir(picNew);
     pic.setAttribute('src', picNew.img);
     pic.setAttribute('data-idx', picNew.idx);
   }
