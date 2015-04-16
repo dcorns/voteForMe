@@ -48,27 +48,25 @@ function main(){
     pic1.addEventListener('click', function(e){
       imagesIn[e.target.dataset.idx].votes += 1;
       console.log(imagesIn[e.target.dataset.idx].votes);
-      var chgImg = getNewImage();
-      pic2.setAttribute('src', chgImg.img);
-      pic2.setAttribute('data-idx', chgImg.idx);
+      setPic(pic2);
     });
     pic2.addEventListener('click', function(e){
       imagesIn[e.target.dataset.idx].votes += 1;
       console.log(imagesIn[e.target.dataset.idx].votes);
-      var chgImg = getNewImage();
-      pic1.setAttribute('src', chgImg.img);
-      pic1.setAttribute('data-idx', chgImg.idx);
+      setPic(pic1);
     });
     document.getElementById('btnLoadMatch').addEventListener('click', function(e){
-      pic1.setAttribute('src', getNewImage().img);
-      pic2.setAttribute('src', getNewImage().img);
+      setPic(pic1);
+      setPic(pic2);
     });
+    setPic(pic1);
+    setPic(pic2);
+  }
+
+  function setPic(pic){
     var picNew = getNewImage();
-    pic1.setAttribute('src', picNew.img);
-    pic1.setAttribute('data-idx', picNew.idx);
-    picNew = getNewImage();
-    pic2.setAttribute('src', picNew.img);
-    pic2.setAttribute('data-idx', picNew.idx);
+    pic.setAttribute('src', picNew);
+    pic.setAttribute('data-idx', picNew.idx);
   }
 
   function getNewImage(oppositeImg){
