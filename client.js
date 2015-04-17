@@ -28,7 +28,6 @@ function main(){
       this.selected.length = 0;
     }
   };
-
   //Aquire image data, add image objects to imagesIn++++++++++++++++++++++
   ajaxGet('https://api.imgur.com/3/album/DDoWy', function(err, response){
     if(err) alert(err.XMLHttpRequestError);
@@ -70,6 +69,15 @@ function main(){
 
   }
 
+  function resetChart(){
+    var c = 0;
+    var len = barChart.datasets[0].bars.length;
+    for(c; c < len; c++){
+      barChart.datasets[0].bars[c].value = 0;
+    }
+    barChart.update();
+  }
+
   function buildChart(){
     var ctx = document.getElementById("csv").getContext("2d");
     var c = 0, len = imagesIn.length, data = {labels:[], datasets: [{data:[]}]};
@@ -86,6 +94,7 @@ function main(){
     for(c; c < len; c++){
       imagesIn[c].votes = 0;
     }
+    resetChart();
   }
 //sets the new image to an image that is not already displayed, don't want to vote against yourself
   function setPic(pic, otherPic){
@@ -117,10 +126,8 @@ function main(){
 
 }
 
-
-
 function getRandomInt(maxInt){
-  return Math.floor(Math.random() * (maxInt - 1));
+  return Math.floor(Math.random() * (maxInt));
 }
 
 function ajaxGet (url, cb, token) {
