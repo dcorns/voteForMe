@@ -80,7 +80,7 @@ function main(){
 
   function buildChart(){
     var ctx = document.getElementById("csv").getContext("2d");
-    var c = 0, len = imagesIn.length, data = {labels:[], datasets: [{data:[]}]};
+    var c = 0, len = imagesIn.length, data = {labels:[], datasets: [{data:[], fillColor: 'rgba(100,220,100,0.5)'}]};
     for(c; c < len; c++){
       data.labels.push(imagesIn[c].id);
       data.datasets[0].data.push(imagesIn[c].votes);
