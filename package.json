@@ -1,0 +1,23 @@
+{
+  "name": "vote_for_me",
+  "version": "1.0.0",
+  "description": "A trivial exercise to aid in teaching",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dcorns/voteForMe"
+  },
+  "author": "Dale Corns",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dcorns/voteForMe/issues"
+  },
+  "homepage": "https://github.com/dcorns/voteForMe",
+  "dependencies": {
+    "express": "^4.12.4"
+  }
+}

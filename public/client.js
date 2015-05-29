@@ -6,6 +6,7 @@
 function main(){
   var imagesIn = [];
   var barChart;
+  var pieChart;
   var tracker = {
     selected:[]
     , checkSelected: function(checkIdx){
@@ -47,15 +48,25 @@ function main(){
     pic1.addEventListener('click', function(e){
       var idx = e.target.dataset.idx;
       imagesIn[idx].votes += 1;
+      //barChart
       barChart.datasets[0].bars[idx].value = imagesIn[idx].votes;
       barChart.update();
+      //pie Chart
+      //pieChart.segments[idx].value = imagesIn[idx].votes;
+      //pieChart.update();
+
       setPic(pic2, pic1);
     });
     pic2.addEventListener('click', function(e){
       var idx = e.target.dataset.idx;
       imagesIn[idx].votes += 1;
+      //barChart
       barChart.datasets[0].bars[idx].value = imagesIn[idx].votes;
       barChart.update();
+      //pie Chart
+      //pieChart.segments[idx].value = imagesIn[idx].votes;
+      //pieChart.update();
+
       setPic(pic1, pic2);
     });
     document.getElementById('btnZeroOut').addEventListener('click', function(e){
@@ -71,21 +82,38 @@ function main(){
 
   function resetChart(){
     var c = 0;
+    //bar Chart
     var len = barChart.datasets[0].bars.length;
     for(c; c < len; c++){
       barChart.datasets[0].bars[c].value = 0;
     }
     barChart.update();
+    //pie Chart
+    //var len = pieChart.data.length;
+    //for(c; c < len; c++){
+    //  pieChart.segments[c].value = 0;
+    //}
+    //pieChart.update();
   }
 
   function buildChart(){
-    var ctx = document.getElementById("csv").getContext("2d");
-    var c = 0, len = imagesIn.length, data = {labels:[], datasets: [{data:[], fillColor: 'rgba(100,220,100,0.5)'}]};
+    var ctx = document.getElementById('csv').getContext('2d');
+    var c = 0, len = imagesIn.length;
+    //bar chart
+    var data = {labels:[], datasets: [{data:[], fillColor: 'rgba(100,220,100,0.5)'}]};
     for(c; c < len; c++){
       data.labels.push(imagesIn[c].id);
       data.datasets[0].data.push(imagesIn[c].votes);
     }
     barChart = new Chart(ctx).Bar(data);
+    //pie chart
+    var ctx2 = document.getElementById('ctx2').getContext('2d');
+    var pieData = [];
+    c=0;
+    for(c; c < len; c++){
+      pieData.push({ value: 2, color:"#F7464A", highlight: "#FF5A5E", label:imagesIn[c].id});
+    }
+    pieChart = new Chart(ctx).Doughnut(pieData);
   }
 
   function zeroOutVotes(){
