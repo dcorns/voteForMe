@@ -24,7 +24,7 @@ app.get('*', function(req, res){
 
 var server = http.createServer(app);
 
-server.listen(process.env.PORT || 5000)
+server.listen(process.env.PORT || 3000);//allows for port binding on heroku which uses process.env.PORT
 server.on('listening', onListening);
 
 function onListening() {
